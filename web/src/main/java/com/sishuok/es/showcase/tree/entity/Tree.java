@@ -28,11 +28,13 @@ public class Tree extends BaseEntity<Long> implements Treeable<Long> {
      */
     private String name;
     /**
-     * 父路径
+     * 父ID
      */
     @Column(name = "parent_id")
     private Long parentId;
-
+    	/**
+    	 * 父路径
+    	 */
     @Column(name = "parent_ids")
     private String parentIds;
 

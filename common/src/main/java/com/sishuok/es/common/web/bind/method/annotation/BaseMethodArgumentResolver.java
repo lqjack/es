@@ -37,6 +37,7 @@ public abstract class BaseMethodArgumentResolver implements HandlerMethodArgumen
         Map<String, String> variables = getUriTemplateVariables(request);
 
         int namePrefixLength = namePrefix.length();
+        //需要进行重构的地方 TODO:
         for (String name : variables.keySet()) {
             if (name.startsWith(namePrefix)) {
 

@@ -66,11 +66,11 @@
             <name>SpringSource Repository</name>
             <url>http://repo.spring.io/snapshot/</url>
         </repository>
-        <repository>
+		<!--<repository>
             <id>cloudhopper</id>
             <name>Repository for Cloudhopper</name>
             <url>http://maven.cloudhopper.com/repos/third-party/</url>
-        </repository>
+		</repository>-->
         <repository>
             <id>jboss-repo-releases</id>
             <name>Jboss Repository</name>
@@ -173,7 +173,7 @@
             <id>local</id>
             <name>filesystem</name>
             <!-- 修改到磁盘的相应位置 -->
-            <url>file:D:\target\site</url>
+            <url>target/site</url>
         </site>
     </distributionManagement>
 

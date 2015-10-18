@@ -61,9 +61,13 @@ public abstract class BaseTreeableService<M extends BaseEntity<ID> & Treeable<ID
 
     @Override
     public M save(M m) {
+    		ID pid = m.getParentId();
         if (m.getWeight() == null) {
-            m.setWeight(nextWeight(m.getParentId()));
+            m.setWeight(nextWeight(pid));
         }
+        
+        //判断父节点是否存在，若存在，更新父节点有孩子。TODO:未找到 hasChildren字段
+//        findOne(pid).setHasChildren(true);
         return super.save(m);
     }
 
@@ -127,7 +131,18 @@ public abstract class BaseTreeableService<M extends BaseEntity<ID> & Treeable<ID
         if ("next".equals(moveType)) {
             List<M> siblings = findSelfAndNextSiblings(target.getParentIds(), target.getWeight());
             siblings.remove(0);//把自己移除
-
+            
+            /**
+             * 
+             * 讲2move到5
+             *      1
+             *    2   3
+             *  4   5 
+             *  
+             *  to
+             *  
+             *  
+             */
             if (siblings.size() == 0) { //如果没有兄弟了 则直接把源的设置为目标即可
                 int nextWeight = nextWeight(target.getParentId());
                 updateSelftAndChild(source, target.getParentId(), target.getParentIds(), nextWeight);

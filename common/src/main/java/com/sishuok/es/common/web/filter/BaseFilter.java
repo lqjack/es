@@ -102,6 +102,10 @@ public abstract class BaseFilter implements Filter {
 
         logger.debug("url filter : current url : [{}]", currentURL);
 
+        /**
+         * 逻辑是否写反 ，
+         * 没有写反，若在黑名单中，则当前的不执行
+         */
         if (isBlackURL(currentURL)) {
             chain.doFilter(request, response);
             return;

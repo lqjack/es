@@ -471,6 +471,23 @@ public class SimpleBaseRepository<M, ID extends Serializable> extends SimpleJpaR
     @Override
     public Page<M> findAll(final Searchable searchable) {
         List<M> list = repositoryHelper.findAll(findAllQL, searchable, searchCallback);
+        /**
+         
+          
+            TODO:优化count查询数量
+            增加两个标示位，boolean isAdded,isDeleted。
+            boolean isValidateed。CRUD处理发生异常，设置为false，正常为true。
+        	    若新增数据时候，将标示isAdded为设置为true，否则为false。
+	        若删除数据时候，将标示isDeleted位设置为true，否则为false。
+	        在执行count时候，判断
+	        if((isAdded || isDeleted) && !isValidated)｛//数据量已经变化，需要执行count（），并更新缓存count数量
+	      
+	        ｝else{//直接读取缓存中count的数量
+	        		count_num = getCountFromCache();
+	        }
+	        
+	        
+        **/
         long total = searchable.hasPageable() ? count(searchable) : list.size();
         return new PageImpl<M>(
                 list,

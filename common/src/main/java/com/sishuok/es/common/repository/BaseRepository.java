@@ -27,6 +27,21 @@ import java.util.List;
  * <p>Date: 13-1-12 下午4:46
  * <p>Version: 1.0
  */
+
+
+/**
+ * @author liu
+
+ *
+ *TODO:
+ *
+ *改进权限管理为：
+ *主体（用户、角色） －》 领域 －》规则（规则名称：操作符：操作值）
+ *
+ *前台与后段的交互通过规则解析后进行执行，避免了前端直接操作部分sql.
+ * @param <M>
+ * @param <ID>
+ */
 @NoRepositoryBean
 public interface BaseRepository<M, ID extends Serializable> extends JpaRepository<M, ID> {
 

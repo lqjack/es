@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
  * <p>Version: 1.0
  */
 @ContextConfiguration({"classpath:spring-common.xml", "classpath:spring-test.xml"})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+//@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public abstract class BaseIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @PersistenceContext
