@@ -7,6 +7,7 @@ package com.sishuok.es.tmp.parentchild;
 
 import com.sishuok.es.common.test.BaseIT;
 import org.junit.Test;
+import org.springframework.util.Assert;
 
 /**
  * <p>User: Zhang Kaitao
@@ -33,7 +34,11 @@ public class ParentChildTest extends BaseIT {
         entityManager.persist(p);
         entityManager.flush();
         entityManager.clear();
+        entityManager.close();
 
+        Parent persistParent = entityManager.find(Parent.class, "123");
+        Assert.isTrue(2 == persistParent.getChilds().size());
+        
 
         p = new Parent();
         p.setId("123");
@@ -52,6 +57,12 @@ public class ParentChildTest extends BaseIT {
 
         entityManager.flush();
         entityManager.clear();
+        
+        persistParent = entityManager.find(Parent.class, "123");
+        Assert.isTrue(2 == persistParent.getChilds().size());
+        for(Child child:persistParent.getChilds()){
+        	System.out.println(child.getName());
+        }
 
         p = entityManager.find(Parent.class, "123");
 
