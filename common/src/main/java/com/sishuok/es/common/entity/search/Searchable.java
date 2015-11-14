@@ -20,6 +20,8 @@ import java.util.Map;
  * <p>User: Zhang Kaitao
  * <p>Date: 13-1-16 上午8:47
  * <p>Version: 1.0
+ * 
+ * TODO :为什么不是接口
  */
 public abstract class Searchable {
 
