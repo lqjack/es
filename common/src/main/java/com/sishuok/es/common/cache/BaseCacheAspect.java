@@ -15,69 +15,80 @@ import org.springframework.util.StringUtils;
 
 /**
  * 基础cache切面
- * <p>User: Zhang Kaitao
- * <p>Date: 13-5-20 下午2:06
- * <p>Version: 1.0
+ * <p>
+ * User: Zhang Kaitao
+ * <p>
+ * Date: 13-5-20 下午2:06
+ * 
+ * TODO:
+ * 是否需要建立CacheMap，而不是只有保存一个Cache
+ * 
+ * <p>
+ * Version: 1.0
  */
 public class BaseCacheAspect implements InitializingBean {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+	protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private CacheManager cacheManager;
-    private Cache cache;
-    protected String cacheName;
+	@Autowired
+	private CacheManager cacheManager;
+	private Cache cache;
+	protected String cacheName;
 
-    /**
-     * 缓存池名称
-     *
-     * @param cacheName
-     */
-    public void setCacheName(String cacheName) {
+	/**
+	 * 缓存池名称
+	 *
+	 * @param cacheName
+	 */
+	public void setCacheName(String cacheName) {
 
-        this.cacheName = cacheName;
-    }
+		this.cacheName = cacheName;
+	}
 
-    /**
-     * 缓存管理器
-     *
-     * @return
-     */
-    public void setCacheManager(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
+	/**
+	 * 缓存管理器
+	 *
+	 * @return
+	 */
+	public void setCacheManager(CacheManager cacheManager) {
+		this.cacheManager = cacheManager;
+	}
 
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		cache = cacheManager.getCache(cacheName);
+	}
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        cache = cacheManager.getCache(cacheName);
-    }
+	public void clear() {
+		if (log.isDebugEnabled())
+			log.debug("cacheName:{}, cache clear", cacheName);
+		this.cache.clear();
+	}
 
-    public void clear() {
-        log.debug("cacheName:{}, cache clear", cacheName);
-        this.cache.clear();
-    }
+	public void evict(String key) {
+		if (log.isDebugEnabled())
+			log.debug("cacheName:{}, evict key:{}", cacheName, key);
+		this.cache.evict(key);
+	}
 
-    public void evict(String key) {
-        log.debug("cacheName:{}, evict key:{}", cacheName, key);
-        this.cache.evict(key);
-    }
+	@SuppressWarnings("unchecked")
+	public <T> T get(Object key) {
+		if (log.isDebugEnabled())
+			log.debug("cacheName:{}, get key:{}", cacheName, key);
+		if (StringUtils.isEmpty(key)) {
+			return null;
+		}
+		Cache.ValueWrapper value = cache.get(key);
+		if (value == null) {
+			return null;
+		}
+		return (T) value.get();
+	}
 
-    public <T> T get(Object key) {
-        log.debug("cacheName:{}, get key:{}", cacheName, key);
-        if (StringUtils.isEmpty(key)) {
-            return null;
-        }
-        Cache.ValueWrapper value = cache.get(key);
-        if (value == null) {
-            return null;
-        }
-        return (T) value.get();
-    }
-
-    public void put(String key, Object value) {
-        log.debug("cacheName:{}, put key:{}", cacheName, key);
-        this.cache.put(key, value);
-    }
+	public void put(String key, Object value) {
+		if (log.isDebugEnabled())
+			log.debug("cacheName:{}, put key:{}", cacheName, key);
+		this.cache.put(key, value);
+	}
 
 }

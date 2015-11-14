@@ -25,7 +25,11 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class BaseOracleEntity<PK extends Serializable> extends AbstractEntity<PK> {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5002771897033414251L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private PK id;
 

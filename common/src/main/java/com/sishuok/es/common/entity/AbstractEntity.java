@@ -19,9 +19,14 @@ import java.io.Serializable;
  */
 public abstract class AbstractEntity<ID extends Serializable> implements Persistable<ID> {
 
-    public abstract ID getId();
+//    public abstract ID getId();//TODO:应该去掉，在父类已经存在。
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2389593696018890763L;
+
+	/**
      * Sets the id of the entity.
      *
      * @param id the id to set
